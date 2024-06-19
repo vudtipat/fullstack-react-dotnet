@@ -26,18 +26,13 @@ app.UseHttpsRedirection();
 app.UseSwaggerUI();
 app.MapControllers();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
 using var scope = app.Services.CreateScope();
 var services = scope.ServiceProvider;
 
 try {
     var context = services.GetRequiredService<DataContext>();
     await context.Database.MigrateAsync();
-    await Seed.SeedData(context);
+    // await Seed.SeedData(context);
 
 }catch(Exception ex) {
     var logger = services.GetRequiredService<ILogger<Program>>();
