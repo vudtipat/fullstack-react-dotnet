@@ -1,3 +1,4 @@
+using Application;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<DataContext>(opt => {
 });
 
 builder.Services.AddControllers();
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(List.Handler).Assembly));
 
 builder.Services.AddCors(opt => {
     opt.AddPolicy("CorsPolicy",policy => {

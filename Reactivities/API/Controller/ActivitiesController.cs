@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -12,22 +14,22 @@ namespace API.Controller
 {
     public class ActivitiesController : BaseController
     {
-        private readonly DataContext _context;
-        public ActivitiesController(DataContext dataContext)
+        private readonly IMediator _mediator;
+        public ActivitiesController(IMediator mediator)
         {
-            _context = dataContext;
+            _mediator = mediator;
         }
 
         [HttpGet] // /api/activities
         public async Task<ActionResult<List<Activity>>> GetActivities()
         {
-            return await _context.Activities.ToListAsync();
+            return await _mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")] // /api/activities/asadsdafsfgfdg
         public async Task<ActionResult<Activity>> GetActivity(Guid id)
         {
-            return await _context.Activities.FindAsync(id);
+            return Ok();
         }
 
 
