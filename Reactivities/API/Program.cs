@@ -1,6 +1,7 @@
 
 using System.Reflection;
 using Application.Activities;
+using Application.Core;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -17,6 +18,7 @@ builder.Services.AddDbContext<DataContext>(opt => {
 
 builder.Services.AddControllers();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Application.Activities.List.Handler).Assembly));
+builder.Services.AddAutoMapper(typeof(MappingProfile).Assembly);
 
 builder.Services.AddCors(opt => {
     opt.AddPolicy("CorsPolicy",policy => {
